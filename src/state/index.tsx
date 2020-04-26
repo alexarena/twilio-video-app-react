@@ -4,10 +4,28 @@ import useFirebaseAuth from './useFirebaseAuth/useFirebaseAuth';
 import usePasscodeAuth from './usePasscodeAuth/usePasscodeAuth';
 import { User } from 'firebase';
 
+function doFetch(endpoint, opts = {}) {
+  const headers = new Headers({
+    'Key-Inflection': 'camel',
+    Authorization: `Bearer ${getAuthToken(document.cookie)}`,
+  });
+  return fetch(endpoint, { ...opts, headers });
+}
+
+function getAuthToken(cookieStr) {
+  for (const str of cookieStr.split(';')) {
+    const [key, value] = str.split('=');
+    if (key.trim() === 'auth_token') {
+      return value;
+    }
+  }
+  return null;
+}
+
 export interface StateContextType {
   error: TwilioError | null;
   setError(error: TwilioError | null): void;
-  getToken(name: string, room: string, passcode?: string): Promise<string>;
+  getToken(room: string): Promise<string>;
   user?: User | null | { displayName: undefined; photoURL: undefined; passcode?: string };
   signIn?(passcode?: string): Promise<void>;
   signOut?(): Promise<void>;
@@ -36,33 +54,22 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     isFetching,
   } as StateContextType;
 
-  if (process.env.REACT_APP_SET_AUTH === 'firebase') {
-    contextValue = {
-      ...contextValue,
-      ...useFirebaseAuth(), // eslint-disable-line react-hooks/rules-of-hooks
-    };
-  } else if (process.env.REACT_APP_SET_AUTH === 'passcode') {
-    contextValue = {
-      ...contextValue,
-      ...usePasscodeAuth(), // eslint-disable-line react-hooks/rules-of-hooks
-    };
-  } else {
-    contextValue = {
-      ...contextValue,
-      getToken: async (identity, roomName) => {
-        const headers = new window.Headers();
-        const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
-        const params = new window.URLSearchParams({ identity, roomName });
+  contextValue = {
+    ...contextValue,
+    getToken: async roomName => {
+      console.log('getting tok for ', roomName);
+      const resp = await doFetch(`/class_sessions/${roomName}`);
+      const json = await resp.json();
+      const token = json.twilioToken;
 
-        return fetch(`${endpoint}?${params}`, { headers }).then(res => res.text());
-      },
-    };
-  }
+      return token;
+    },
+  };
 
-  const getToken: StateContextType['getToken'] = (name, room) => {
+  const getToken: StateContextType['getToken'] = room => {
     setIsFetching(true);
     return contextValue
-      .getToken(name, room)
+      .getToken(room)
       .then(res => {
         setIsFetching(false);
         return res;
