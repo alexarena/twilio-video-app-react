@@ -16,6 +16,8 @@ import usePublications from '../../hooks/usePublications/usePublications';
 import useIsTrackSwitchedOff from '../../hooks/useIsTrackSwitchedOff/useIsTrackSwitchedOff';
 import useTrack from '../../hooks/useTrack/useTrack';
 
+import fullNameFromIdentityString from '../../util/fullNameFromIdentityString';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -108,7 +110,7 @@ export default function ParticipantInfo({ participant, onClick, isSelected, chil
         <div className={classes.infoRow}>
           <h4 className={classes.identity}>
             <ParticipantConnectionIndicator participant={participant} />
-            {participant.identity}
+            {fullNameFromIdentityString(participant.identity)}
           </h4>
           <NetworkQualityLevel qualityLevel={networkQualityLevel} />
         </div>

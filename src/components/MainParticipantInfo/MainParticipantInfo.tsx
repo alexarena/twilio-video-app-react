@@ -9,6 +9,8 @@ import usePublications from '../../hooks/usePublications/usePublications';
 import useTrack from '../../hooks/useTrack/useTrack';
 import VideocamOff from '@material-ui/icons/VideocamOff';
 
+import fullNameFromIdentityString from '../../util/fullNameFromIdentityString';
+
 const useStyles = makeStyles({
   container: {
     position: 'relative',
@@ -63,7 +65,7 @@ export default function MainParticipantInfo({ participant, children }: MainParti
     >
       <div className={classes.infoContainer}>
         <h4 className={classes.identity}>
-          {participant.identity}
+          {fullNameFromIdentityString(participant.identity)}
           {!isVideoEnabled && <VideocamOff />}
         </h4>
       </div>
