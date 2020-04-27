@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { LocalVideoTrack, Participant, RemoteVideoTrack } from 'twilio-video';
 
-import BandwidthWarning from '../BandwidthWarning/BandwidthWarning';
+import BandwidthWarning from '../BandwidthWarning';
 import useIsTrackSwitchedOff from '../../hooks/useIsTrackSwitchedOff/useIsTrackSwitchedOff';
 import usePublications from '../../hooks/usePublications/usePublications';
 import useTrack from '../../hooks/useTrack/useTrack';
@@ -47,21 +47,30 @@ interface MainParticipantInfoProps {
   children: React.ReactNode;
 }
 
-export default function MainParticipantInfo({ participant, children }: MainParticipantInfoProps) {
+export default function MainParticipantInfo({
+  participant,
+  children,
+}: MainParticipantInfoProps) {
   const classes = useStyles();
 
   const publications = usePublications(participant);
   const videoPublication = publications.find(p => p.trackName === 'camera');
-  const screenSharePublication = publications.find(p => p.trackName === 'screen');
+  const screenSharePublication = publications.find(
+    p => p.trackName === 'screen'
+  );
   const isVideoEnabled = Boolean(videoPublication);
 
   const videoTrack = useTrack(screenSharePublication || videoPublication);
-  const isVideoSwitchedOff = useIsTrackSwitchedOff(videoTrack as LocalVideoTrack | RemoteVideoTrack);
+  const isVideoSwitchedOff = useIsTrackSwitchedOff(
+    videoTrack as LocalVideoTrack | RemoteVideoTrack
+  );
 
   return (
     <div
       data-cy-main-participant
-      className={clsx(classes.container, { [classes.isVideoSwitchedOff]: isVideoSwitchedOff })}
+      className={clsx(classes.container, {
+        [classes.isVideoSwitchedOff]: isVideoSwitchedOff,
+      })}
     >
       <div className={classes.infoContainer}>
         <h4 className={classes.identity}>

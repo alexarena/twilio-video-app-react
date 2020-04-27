@@ -10,7 +10,7 @@ import {
 } from 'twilio-video';
 
 import AudioLevelIndicator from '../AudioLevelIndicator';
-import BandwidthWarning from '../BandwidthWarning/BandwidthWarning';
+import BandwidthWarning from '../BandwidthWarning';
 import NetworkQualityLevel from '../NewtorkQualityLevel/NetworkQualityLevel';
 import ParticipantConnectionIndicator from './ParticipantConnectionIndicator/ParticipantConnectionIndicator';
 import PinIcon from './PinIcon/PinIcon';
