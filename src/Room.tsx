@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { styled } from '@material-ui/core/styles';
 
 import Controls from './components/Controls/Controls';
-import LocalVideoPreview from './components/LocalVideoPreview/LocalVideoPreview';
+import LocalVideoPreview from './components/LocalVideoPreview';
 import ReconnectingNotification from './components/ReconnectingNotification';
 import AboutModal from './components/AboutDialog';
 
