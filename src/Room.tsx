@@ -14,6 +14,7 @@ import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
 import useClassDetails from './ClassDetailsContext';
 import ToggleFullscreenButton from './components/ToggleFullScreenButton';
+import LocalAudioLevelIndicator from './components/LocalAudioLevelIndicator';
 
 const Container = styled('div')({
   display: 'grid',
@@ -95,6 +96,7 @@ export default function App() {
         <LogoutButton />
         <JoinButton />
         <ToggleFullscreenButton />
+        <LocalAudioLevelIndicator />
         <span>
           <strong>Room state:</strong>
           {roomState}
