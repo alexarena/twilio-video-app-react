@@ -1,20 +1,17 @@
 import React, { useState, useCallback } from 'react';
 import { styled } from '@material-ui/core/styles';
 
+import ParticipantStrip from './components/ParticipantStrip/ParticipantStrip';
+import MainParticipant from './components/MainParticipant/MainParticipant';
+import LocalAudioLevelIndicator from './components/LocalAudioLevelIndicator';
 import Controls from './components/Controls/Controls';
 import LocalVideoPreview from './components/LocalVideoPreview';
 import ReconnectingNotification from './components/ReconnectingNotification';
 import AboutModal from './components/AboutDialog';
 
-import ParticipantStrip from './components/ParticipantStrip/ParticipantStrip';
-import MainParticipant from './components/MainParticipant/MainParticipant';
-
 import useVideoContext from './hooks/useVideoContext/useVideoContext';
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
-import ToggleFullscreenButton from './components/Controls/ToggleFullScreenButton';
-import LocalAudioLevelIndicator from './components/LocalAudioLevelIndicator';
-import FlipCameraButton from './components/Controls/FlipCameraButton';
 
 const Container = styled('div')({
   display: 'grid',
