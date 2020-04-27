@@ -6,11 +6,15 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import App from './App';
 import AppStateProvider, { useAppState } from './state';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import { ConnectOptions } from 'twilio-video';
 import ErrorDialog from './components/ErrorDialog/ErrorDialog';
 import { isMobile } from './utils';
-import LoginPage from './components/LoginPage/LoginPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import theme from './theme';
 import './types';
@@ -78,9 +82,6 @@ ReactDOM.render(
               <VideoApp />
             </ClassDetailsProvider>
           </PrivateRoute>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
           <Redirect to="/" />
         </Switch>
       </AppStateProvider>
