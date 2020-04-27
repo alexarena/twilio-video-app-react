@@ -13,6 +13,7 @@ import useVideoContext from './hooks/useVideoContext/useVideoContext';
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
 import useClassDetails from './ClassDetailsContext';
+import ToggleFullscreenButton from './components/ToggleFullScreenButton';
 
 const Container = styled('div')({
   display: 'grid',
@@ -93,6 +94,7 @@ export default function App() {
         <AboutModalButton />
         <LogoutButton />
         <JoinButton />
+        <ToggleFullscreenButton />
         <span>
           <strong>Room state:</strong>
           {roomState}
