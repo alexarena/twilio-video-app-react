@@ -12,7 +12,6 @@ import MainParticipant from './components/MainParticipant/MainParticipant';
 import useVideoContext from './hooks/useVideoContext/useVideoContext';
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
-import useClassDetails from './ClassDetailsContext';
 import ToggleFullscreenButton from './components/Controls/ToggleFullScreenButton';
 import LocalAudioLevelIndicator from './components/LocalAudioLevelIndicator';
 import FlipCameraButton from './components/Controls/FlipCameraButton';
@@ -54,27 +53,6 @@ function LogoutButton() {
   return <button onClick={handleSignOut}>Logout</button>;
 }
 
-function JoinButton() {
-  const { connect } = useVideoContext();
-  const classDetails = useClassDetails();
-
-  React.useEffect(() => {
-    console.log('class details', classDetails);
-  }, [classDetails]);
-
-  function join() {
-    if (classDetails?.twilioToken) {
-      connect(classDetails?.twilioToken);
-    }
-  }
-
-  return (
-    <button disabled={!classDetails} onClick={join}>
-      Join
-    </button>
-  );
-}
-
 export default function App() {
   const roomState = useRoomState();
   // useConnectToRoom(classDetails?.twilioToken);
@@ -95,9 +73,6 @@ export default function App() {
       <div>
         <AboutModalButton />
         <LogoutButton />
-        <JoinButton />
-        <ToggleFullscreenButton />
-        <FlipCameraButton />
         <LocalAudioLevelIndicator />
         <span>
           <strong>Room state:</strong>

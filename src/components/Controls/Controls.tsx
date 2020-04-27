@@ -7,6 +7,9 @@ import ToggleScreenShareButton from './ToggleScreenShareButton';
 
 import useIsUserActive from '../../hooks/useIsUserActive';
 import useRoomState from '../../hooks/useRoomState/useRoomState';
+import ToggleFullscreenButton from './ToggleFullScreenButton';
+import FlipCameraButton from './FlipCameraButton';
+import JoinButton from './JoinButton';
 
 const Container = ({ ...rest }) => {
   return (
@@ -38,11 +41,15 @@ export default function Controls() {
     <Container>
       <ToggleAudioButton disabled={isReconnecting} />
       <ToggleVideoButton disabled={isReconnecting} />
-      {roomState !== 'disconnected' && (
+      <ToggleFullscreenButton />
+      <FlipCameraButton />
+      {roomState !== 'disconnected' ? (
         <>
           <ToggleScreenShareButton disabled={isReconnecting} />
           <EndCallButton />
         </>
+      ) : (
+        <JoinButton />
       )}
     </Container>
   );
