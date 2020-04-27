@@ -13,9 +13,9 @@ import useVideoContext from './hooks/useVideoContext/useVideoContext';
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
 import useClassDetails from './ClassDetailsContext';
-import ToggleFullscreenButton from './components/ToggleFullScreenButton';
+import ToggleFullscreenButton from './components/Controls/ToggleFullScreenButton';
 import LocalAudioLevelIndicator from './components/LocalAudioLevelIndicator';
-import FlipCameraButton from './components/FlipCameraButton';
+import FlipCameraButton from './components/Controls/FlipCameraButton';
 
 const Container = styled('div')({
   display: 'grid',

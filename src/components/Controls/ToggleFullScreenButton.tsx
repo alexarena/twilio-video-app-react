@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useFullScreenToggle from '../hooks/useFullScreenToggle/useFullScreenToggle';
+import useFullScreenToggle from '../../hooks/useFullScreenToggle/useFullScreenToggle';
 
 export default function ToggleFullscreenButton() {
   const [isFullScreen, toggleFullScreen] = useFullScreenToggle();

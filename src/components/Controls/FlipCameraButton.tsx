@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import useVideoContext from '../hooks/useVideoContext/useVideoContext';
+import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 
 function useSupportsFacingMode(facingMode) {
   const [supportsFacingMode, setSupportsFacingMode] = useState<Boolean | null>(
