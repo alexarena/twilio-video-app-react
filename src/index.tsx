@@ -7,7 +7,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import App from './App';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ConnectOptions, TwilioError } from 'twilio-video';
-import ErrorDialog from './components/ErrorDialog/ErrorDialog';
+import ErrorDialog from './components/ErrorDialog';
 import { isMobile } from './utils';
 import theme from './theme';
 import './types';
