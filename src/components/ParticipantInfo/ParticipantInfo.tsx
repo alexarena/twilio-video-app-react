@@ -11,7 +11,7 @@ import {
 
 import AudioLevelIndicator from '../AudioLevelIndicator';
 import BandwidthWarning from '../BandwidthWarning';
-import NetworkQualityLevel from '../NewtorkQualityLevel/NetworkQualityLevel';
+import NetworkQualityLevel from '../NetworkQualityLevel';
 import ParticipantConnectionIndicator from './ParticipantConnectionIndicator/ParticipantConnectionIndicator';
 import PinIcon from './PinIcon/PinIcon';
 import ScreenShare from '@material-ui/icons/ScreenShare';
