@@ -1,18 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useVideoContext from '../hooks/useVideoContext/useVideoContext';
 
-export default function FlipCameraButton() {
-  const {
-    room: { localParticipant },
-    localTracks,
-    getLocalVideoTrack,
-  } = useVideoContext();
+function useSupportsFacingMode(facingMode) {
   const [supportsFacingMode, setSupportsFacingMode] = useState<Boolean | null>(
     null
   );
-  const videoTrack = localTracks.find(track => track.name === 'camera');
-  const facingMode = videoTrack?.mediaStreamTrack.getSettings().facingMode;
-
   useEffect(() => {
     // The 'supportsFacingMode' variable determines if this component is rendered
     // If 'facingMode' exists, we will set supportsFacingMode to true.
@@ -23,10 +15,18 @@ export default function FlipCameraButton() {
       setSupportsFacingMode(Boolean(facingMode));
     }
   }, [facingMode, supportsFacingMode]);
+  return supportsFacingMode;
+}
 
-  const toggleFacingMode = useCallback(() => {
+function useToggleFacingMode(facingMode, videoTrack) {
+  const {
+    room: { localParticipant },
+    getLocalVideoTrack,
+  } = useVideoContext();
+
+  return useCallback(() => {
     const localTrackPublication = localParticipant?.unpublishTrack(videoTrack!);
-    // TODO: remove when SDK implements this event. See: https://issues.corp.twilio.com/browse/JSDK-2592
+    // TODO: remove when SDK implements this event.
     localParticipant?.emit('trackUnpublished', localTrackPublication);
     videoTrack!.stop();
 
@@ -36,6 +36,15 @@ export default function FlipCameraButton() {
       localParticipant?.publishTrack(newVideoTrack, { priority: 'low' });
     });
   }, [facingMode, getLocalVideoTrack, localParticipant, videoTrack]);
+}
+
+export default function FlipCameraButton() {
+  const { localTracks } = useVideoContext();
+
+  const videoTrack = localTracks.find(track => track.name === 'camera');
+  const facingMode = videoTrack?.mediaStreamTrack.getSettings().facingMode;
+  const supportsFacingMode = useSupportsFacingMode(facingMode);
+  const toggleFacingMode = useToggleFacingMode(facingMode, videoTrack);
 
   return supportsFacingMode ? (
     <button onClick={toggleFacingMode} disabled={!videoTrack}>
