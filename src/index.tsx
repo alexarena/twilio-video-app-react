@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import App from './App';
-import AppStateProvider, { useAppState } from './state';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ConnectOptions } from 'twilio-video';
+import { ConnectOptions, TwilioError } from 'twilio-video';
 import ErrorDialog from './components/ErrorDialog/ErrorDialog';
 import { isMobile } from './utils';
 import theme from './theme';
@@ -52,7 +51,7 @@ if (isMobile && connectionOptions?.bandwidthProfile?.video) {
 }
 
 const VideoApp = () => {
-  const { error, setError } = useAppState();
+  const [error, setError] = useState<TwilioError | null>(null);
 
   return (
     <VideoProvider options={connectionOptions} onError={setError}>
@@ -66,15 +65,13 @@ ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
     <Router>
-      <AppStateProvider>
-        <Switch>
-          <Route path="/room/:URLRoomName">
-            <ClassDetailsProvider>
-              <VideoApp />
-            </ClassDetailsProvider>
-          </Route>
-        </Switch>
-      </AppStateProvider>
+      <Switch>
+        <Route path="/room/:URLRoomName">
+          <ClassDetailsProvider>
+            <VideoApp />
+          </ClassDetailsProvider>
+        </Route>
+      </Switch>
     </Router>
   </MuiThemeProvider>,
   document.getElementById('root')

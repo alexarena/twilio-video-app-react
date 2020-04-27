@@ -42,5 +42,9 @@ export function ClassDetailsProvider({ children }) {
     }
   }, [URLRoomName]);
 
-  return <ClassDetailsContext.Provider value={classDetails}>{children}</ClassDetailsContext.Provider>;
+  return (
+    <ClassDetailsContext.Provider value={classDetails}>
+      {children}
+    </ClassDetailsContext.Provider>
+  );
 }
