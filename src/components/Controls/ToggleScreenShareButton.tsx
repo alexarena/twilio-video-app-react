@@ -18,6 +18,8 @@ export default function ToggleScreenShareButton(props: { disabled?: boolean }) {
   const isDisabled =
     props.disabled || disableScreenShareButton || !isScreenShareSupported;
 
+  // Checking if screen is shared changed in 302991a7f8ef612d874853291859b98fc19d5097
+  // If this behavior is buggy, that commit may be why
   const isScreenShared =
     screenShareParticipant && screenShareParticipant === room.localParticipant;
 
