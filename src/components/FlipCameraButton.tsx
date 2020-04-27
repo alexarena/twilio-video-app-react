@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
 import { IconButton } from '@material-ui/core';
-import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
+import useVideoContext from '../hooks/useVideoContext/useVideoContext';
 
 export default function FlipCameraButton() {
   const {
@@ -9,7 +9,9 @@ export default function FlipCameraButton() {
     localTracks,
     getLocalVideoTrack,
   } = useVideoContext();
-  const [supportsFacingMode, setSupportsFacingMode] = useState<Boolean | null>(null);
+  const [supportsFacingMode, setSupportsFacingMode] = useState<Boolean | null>(
+    null
+  );
   const videoTrack = localTracks.find(track => track.name === 'camera');
   const facingMode = videoTrack?.mediaStreamTrack.getSettings().facingMode;
 
