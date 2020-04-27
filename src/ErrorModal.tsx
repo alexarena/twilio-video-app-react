@@ -25,7 +25,7 @@ function enhanceMessage(message = '', code?: number) {
   }
 }
 
-function ErrorDialog({
+function ErrorModal({
   dismissError,
   error,
 }: PropsWithChildren<ErrorDialogProps>) {
@@ -57,4 +57,4 @@ function ErrorDialog({
   );
 }
 
-export default ErrorDialog;
+export default ErrorModal;

@@ -7,7 +7,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import App from './App';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ConnectOptions, TwilioError } from 'twilio-video';
-import ErrorDialog from './components/ErrorDialog';
+import ErrorModal from './ErrorModal';
 import { isMobile } from './utils';
 import theme from './theme';
 import './types';
@@ -55,7 +55,7 @@ const VideoApp = () => {
 
   return (
     <VideoProvider options={connectionOptions} onError={setError}>
-      <ErrorDialog dismissError={() => setError(null)} error={error} />
+      <ErrorModal dismissError={() => setError(null)} error={error} />
       <App />
     </VideoProvider>
   );
