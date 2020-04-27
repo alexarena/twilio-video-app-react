@@ -4,8 +4,10 @@ import { styled } from '@material-ui/core/styles';
 import Controls from './components/Controls/Controls';
 import LocalVideoPreview from './components/LocalVideoPreview/LocalVideoPreview';
 import ReconnectingNotification from './components/ReconnectingNotification/ReconnectingNotification';
-import Room from './components/Room/Room';
 import Menu from './components/MenuBar/Menu';
+
+import ParticipantStrip from './components/ParticipantStrip/ParticipantStrip';
+import MainParticipant from './components/MainParticipant/MainParticipant';
 
 import useVideoContext from './hooks/useVideoContext/useVideoContext';
 import useHeight from './hooks/useHeight/useHeight';
@@ -17,6 +19,14 @@ const Container = styled('div')({
   display: 'grid',
   gridTemplateRows: 'auto 1fr',
 });
+
+const RoomContainer = styled('div')(({ theme }) => ({
+  position: 'relative',
+  height: '100%',
+  display: 'grid',
+  gridTemplateColumns: `260px 1fr`,
+  gridTemplateAreas: '". participantList"',
+}));
 
 const Main = styled('main')({
   overflow: 'hidden',
@@ -57,7 +67,14 @@ export default function App() {
     <Container style={{ height }}>
       <Menu />
       <Main>
-        {roomState === 'disconnected' ? <LocalVideoPreview /> : <Room />}
+        {roomState === 'disconnected' ? (
+          <LocalVideoPreview />
+        ) : (
+          <RoomContainer>
+            <ParticipantStrip />
+            <MainParticipant />
+          </RoomContainer>
+        )}
         <Controls />
       </Main>
       <ReconnectingNotification />

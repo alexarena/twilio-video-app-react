@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
-import App from './App';
+import Room from './Room';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ConnectOptions, TwilioError } from 'twilio-video';
 import ErrorModal from './ErrorModal';
@@ -56,7 +56,7 @@ const VideoApp = () => {
   return (
     <VideoProvider options={connectionOptions} onError={setError}>
       <ErrorModal dismissError={() => setError(null)} error={error} />
-      <App />
+      <Room />
     </VideoProvider>
   );
 };
