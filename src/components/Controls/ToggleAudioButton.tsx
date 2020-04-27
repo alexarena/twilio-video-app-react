@@ -6,7 +6,7 @@ import Mic from '@material-ui/icons/Mic';
 import MicOff from '@material-ui/icons/MicOff';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import useLocalAudioToggle from '../../../hooks/useLocalAudioToggle/useLocalAudioToggle';
+import useLocalAudioToggle from '../../hooks/useLocalAudioToggle/useLocalAudioToggle';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +26,12 @@ export default function ToggleAudioButton(props: { disabled?: boolean }) {
       placement="top"
       PopperProps={{ disablePortal: true }}
     >
-      <Fab className={classes.fab} onClick={toggleAudioEnabled} disabled={props.disabled} data-cy-audio-toggle>
+      <Fab
+        className={classes.fab}
+        onClick={toggleAudioEnabled}
+        disabled={props.disabled}
+        data-cy-audio-toggle
+      >
         {isAudioEnabled ? <Mic /> : <MicOff />}
       </Fab>
     </Tooltip>

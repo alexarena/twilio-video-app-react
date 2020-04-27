@@ -6,7 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Videocam from '@material-ui/icons/Videocam';
 import VideocamOff from '@material-ui/icons/VideocamOff';
 
-import useLocalVideoToggle from '../../../hooks/useLocalVideoToggle/useLocalVideoToggle';
+import useLocalVideoToggle from '../../hooks/useLocalVideoToggle/useLocalVideoToggle';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +26,11 @@ export default function ToggleVideoButton(props: { disabled?: boolean }) {
       placement="top"
       PopperProps={{ disablePortal: true }}
     >
-      <Fab className={classes.fab} onClick={toggleVideoEnabled} disabled={props.disabled}>
+      <Fab
+        className={classes.fab}
+        onClick={toggleVideoEnabled}
+        disabled={props.disabled}
+      >
         {isVideoEnabled ? <Videocam /> : <VideocamOff />}
       </Fab>
     </Tooltip>

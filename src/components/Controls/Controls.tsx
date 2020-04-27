@@ -2,12 +2,12 @@ import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
-import EndCallButton from './EndCallButton/EndCallButton';
-import ToggleAudioButton from './ToggleAudioButton/ToggleAudioButton';
-import ToggleVideoButton from './ToggleVideoButton/ToggleVideoButton';
-import ToggleScreenShareButton from './ToogleScreenShareButton/ToggleScreenShareButton';
+import EndCallButton from './EndCallButton';
+import ToggleAudioButton from './ToggleAudioButton';
+import ToggleVideoButton from './ToggleVideoButton';
+import ToggleScreenShareButton from './ToggleScreenShareButton';
 
-import useIsUserActive from './useIsUserActive/useIsUserActive';
+import useIsUserActive from '../../hooks/useIsUserActive';
 import useRoomState from '../../hooks/useRoomState/useRoomState';
 
 const useStyles = makeStyles((theme: Theme) =>
