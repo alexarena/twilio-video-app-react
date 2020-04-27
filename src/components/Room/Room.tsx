@@ -7,14 +7,8 @@ const Container = styled('div')(({ theme }) => ({
   position: 'relative',
   height: '100%',
   display: 'grid',
-  gridTemplateColumns: `${theme.sidebarWidth}px 1fr`,
+  gridTemplateColumns: `260px 1fr`,
   gridTemplateAreas: '". participantList"',
-  [theme.breakpoints.down('xs')]: {
-    gridTemplateAreas: '"participantList" "."',
-    gridTemplateColumns: `auto`,
-    gridTemplateRows: `calc(100% - ${theme.sidebarMobileHeight + 12}px) ${theme.sidebarMobileHeight + 6}px`,
-    gridGap: '6px',
-  },
 }));
 
 export default function Room() {

@@ -1,7 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { LocalAudioTrack, LocalVideoTrack, Participant, RemoteAudioTrack, RemoteVideoTrack } from 'twilio-video';
+import {
+  LocalAudioTrack,
+  LocalVideoTrack,
+  Participant,
+  RemoteAudioTrack,
+  RemoteVideoTrack,
+} from 'twilio-video';
 
 import AudioLevelIndicator from '../AudioLevelIndicator/AudioLevelIndicator';
 import BandwidthWarning from '../BandwidthWarning/BandwidthWarning';
@@ -33,12 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
       '& svg': {
         stroke: 'black',
         strokeWidth: '0.8px',
-      },
-      [theme.breakpoints.down('xs')]: {
-        height: theme.sidebarMobileHeight,
-        width: `${(theme.sidebarMobileHeight * 16) / 9}px`,
-        marginRight: '3px',
-        fontSize: '10px',
       },
     },
     isVideoSwitchedOff: {
@@ -81,7 +81,12 @@ interface ParticipantInfoProps {
   isSelected: boolean;
 }
 
-export default function ParticipantInfo({ participant, onClick, isSelected, children }: ParticipantInfoProps) {
+export default function ParticipantInfo({
+  participant,
+  onClick,
+  isSelected,
+  children,
+}: ParticipantInfoProps) {
   const publications = usePublications(participant);
 
   const audioPublication = publications.find(p => p.kind === 'audio');
@@ -92,9 +97,13 @@ export default function ParticipantInfo({ participant, onClick, isSelected, chil
   const isScreenShareEnabled = publications.find(p => p.trackName === 'screen');
 
   const videoTrack = useTrack(videoPublication);
-  const isVideoSwitchedOff = useIsTrackSwitchedOff(videoTrack as LocalVideoTrack | RemoteVideoTrack);
+  const isVideoSwitchedOff = useIsTrackSwitchedOff(
+    videoTrack as LocalVideoTrack | RemoteVideoTrack
+  );
 
-  const audioTrack = useTrack(audioPublication) as LocalAudioTrack | RemoteAudioTrack;
+  const audioTrack = useTrack(audioPublication) as
+    | LocalAudioTrack
+    | RemoteAudioTrack;
 
   const classes = useStyles();
 
@@ -106,7 +115,11 @@ export default function ParticipantInfo({ participant, onClick, isSelected, chil
       onClick={onClick}
       data-cy-participant={participant.identity}
     >
-      <div className={clsx(classes.infoContainer, { [classes.hideVideo]: !isVideoEnabled })}>
+      <div
+        className={clsx(classes.infoContainer, {
+          [classes.hideVideo]: !isVideoEnabled,
+        })}
+      >
         <div className={classes.infoRow}>
           <h4 className={classes.identity}>
             <ParticipantConnectionIndicator participant={participant} />

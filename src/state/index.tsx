@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
 import { TwilioError } from 'twilio-video';
-import useFirebaseAuth from './useFirebaseAuth/useFirebaseAuth';
-import usePasscodeAuth from './usePasscodeAuth/usePasscodeAuth';
 import { User } from 'firebase';
 
 function doFetch(endpoint, opts = {}) {
@@ -26,7 +24,10 @@ export interface StateContextType {
   error: TwilioError | null;
   setError(error: TwilioError | null): void;
   getToken(room: string): Promise<string>;
-  user?: User | null | { displayName: undefined; photoURL: undefined; passcode?: string };
+  user?:
+    | User
+    | null
+    | { displayName: undefined; photoURL: undefined; passcode?: string };
   signIn?(passcode?: string): Promise<void>;
   signOut?(): Promise<void>;
   isAuthReady?: boolean;
@@ -81,7 +82,11 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
       });
   };
 
-  return <StateContext.Provider value={{ ...contextValue, getToken }}>{props.children}</StateContext.Provider>;
+  return (
+    <StateContext.Provider value={{ ...contextValue, getToken }}>
+      {props.children}
+    </StateContext.Provider>
+  );
 }
 
 export function useAppState() {
