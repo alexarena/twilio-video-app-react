@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
-import { IconButton } from '@material-ui/core';
 import useVideoContext from '../hooks/useVideoContext/useVideoContext';
 
 export default function FlipCameraButton() {
@@ -40,8 +38,8 @@ export default function FlipCameraButton() {
   }, [facingMode, getLocalVideoTrack, localParticipant, videoTrack]);
 
   return supportsFacingMode ? (
-    <IconButton onClick={toggleFacingMode} disabled={!videoTrack}>
-      <FlipCameraIosIcon />
-    </IconButton>
+    <button onClick={toggleFacingMode} disabled={!videoTrack}>
+      Flip camera from: {facingMode}
+    </button>
   ) : null;
 }
