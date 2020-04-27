@@ -18,7 +18,9 @@ describe('the useHandleonDisconnect hook', () => {
 
   it('should tear down old listeners when receiving a new room', () => {
     const originalMockRoom = mockRoom;
-    const { rerender } = renderHook(() => useHandleOnDisconnect(mockRoom, () => {}));
+    const { rerender } = renderHook(() =>
+      useHandleOnDisconnect(mockRoom, () => {})
+    );
     expect(originalMockRoom.listenerCount('disconnected')).toBe(1);
 
     act(() => {
@@ -32,7 +34,9 @@ describe('the useHandleonDisconnect hook', () => {
   });
 
   it('should clean up listeners on unmount', () => {
-    const { unmount } = renderHook(() => useHandleOnDisconnect(mockRoom, () => {}));
+    const { unmount } = renderHook(() =>
+      useHandleOnDisconnect(mockRoom, () => {})
+    );
     unmount();
     expect(mockRoom.listenerCount('disconnected')).toBe(0);
   });

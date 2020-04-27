@@ -5,14 +5,19 @@ import { EventEmitter } from 'events';
 
 // mock enumerateDevices so that it behaves as if the user has already granted permissions to use local media.
 // @ts-ignore
-navigator.mediaDevices = { enumerateDevices: () => Promise.resolve([{ deviceId: 1, label: '1' }]) };
+navigator.mediaDevices = {
+  enumerateDevices: () => Promise.resolve([{ deviceId: 1, label: '1' }]),
+};
 
 describe('the useLocalTracks hook', () => {
   it('should return an array of tracks and two functions', async () => {
     const { result, waitForNextUpdate } = renderHook(useLocalTracks);
     expect(result.current.localTracks).toEqual([]);
     await waitForNextUpdate();
-    expect(result.current.localTracks).toEqual([expect.any(EventEmitter), expect.any(EventEmitter)]);
+    expect(result.current.localTracks).toEqual([
+      expect.any(EventEmitter),
+      expect.any(EventEmitter),
+    ]);
     expect(result.current.getLocalVideoTrack).toEqual(expect.any(Function));
   });
 
@@ -31,7 +36,10 @@ describe('the useLocalTracks hook', () => {
   it('should respond to "stopped" events from the local video track', async () => {
     const { result, waitForNextUpdate } = renderHook(useLocalTracks);
     await waitForNextUpdate();
-    expect(result.current.localTracks).toEqual([expect.any(EventEmitter), expect.any(EventEmitter)]);
+    expect(result.current.localTracks).toEqual([
+      expect.any(EventEmitter),
+      expect.any(EventEmitter),
+    ]);
     act(() => {
       result.current.localTracks[0].emit('stopped');
       result.current.localTracks[1].emit('stopped');

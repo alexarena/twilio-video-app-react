@@ -11,7 +11,7 @@ import ErrorModal from './ErrorModal';
 import { isMobile } from './utils';
 import theme from './theme';
 import './types';
-import { VideoProvider } from './components/VideoProvider';
+import { VideoProvider } from './VideoProvider';
 import { ClassDetailsProvider } from './ClassDetailsContext';
 
 // See: https://media.twiliocdn.com/sdk/js/video/releases/2.0.0/docs/global.html#ConnectOptions

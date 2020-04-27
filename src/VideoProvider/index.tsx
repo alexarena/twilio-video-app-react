@@ -7,7 +7,7 @@ import {
   Room,
   TwilioError,
 } from 'twilio-video';
-import { Callback, ErrorCallback } from '../../types';
+import { Callback, ErrorCallback } from '../types';
 import { SelectedParticipantProvider } from './useSelectedParticipant/useSelectedParticipant';
 
 import AttachVisibilityHandler from './AttachVisibilityHandler/AttachVisibilityHandler';
@@ -31,7 +31,9 @@ export interface IVideoContext {
   connect: (token: string) => Promise<void>;
   onError: ErrorCallback;
   onDisconnect: Callback;
-  getLocalVideoTrack: (facingMode?: CreateLocalTrackOptions['facingMode']) => Promise<LocalVideoTrack>;
+  getLocalVideoTrack: (
+    facingMode?: CreateLocalTrackOptions['facingMode']
+  ) => Promise<LocalVideoTrack>;
 }
 
 export const VideoContext = createContext<IVideoContext>(null!);
@@ -43,14 +45,23 @@ interface VideoProviderProps {
   children: ReactNode;
 }
 
-export function VideoProvider({ options, children, onError = () => {}, onDisconnect = () => {} }: VideoProviderProps) {
+export function VideoProvider({
+  options,
+  children,
+  onError = () => {},
+  onDisconnect = () => {},
+}: VideoProviderProps) {
   const onErrorCallback = (error: TwilioError) => {
     console.log(`ERROR: ${error.message}`, error);
     onError(error);
   };
 
   const { localTracks, getLocalVideoTrack } = useLocalTracks();
-  const { room, isConnecting, connect } = useRoom(localTracks, onErrorCallback, options);
+  const { room, isConnecting, connect } = useRoom(
+    localTracks,
+    onErrorCallback,
+    options
+  );
 
   // Register onError and onDisconnect callback functions.
   useHandleRoomDisconnectionErrors(room, onError);
@@ -69,7 +80,9 @@ export function VideoProvider({ options, children, onError = () => {}, onDisconn
         connect,
       }}
     >
-      <SelectedParticipantProvider room={room}>{children}</SelectedParticipantProvider>
+      <SelectedParticipantProvider room={room}>
+        {children}
+      </SelectedParticipantProvider>
       {/* 
         The AttachVisibilityHandler component is using the useLocalVideoToggle hook
         which must be used within the VideoContext Provider.

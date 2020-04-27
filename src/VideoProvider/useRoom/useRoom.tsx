@@ -1,13 +1,17 @@
-import { Callback } from '../../../types';
+import { Callback } from '../../types';
 import EventEmitter from 'events';
-import { isMobile } from '../../../utils';
+import { isMobile } from '../../utils';
 import Video, { ConnectOptions, LocalTrack, Room } from 'twilio-video';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 // @ts-ignore
 window.TwilioVideo = Video;
 
-export default function useRoom(localTracks: LocalTrack[], onError: Callback, options?: ConnectOptions) {
+export default function useRoom(
+  localTracks: LocalTrack[],
+  onError: Callback,
+  options?: ConnectOptions
+) {
   const [room, setRoom] = useState<Room>(new EventEmitter() as Room);
   const [isConnecting, setIsConnecting] = useState(false);
   const localTracksRef = useRef<LocalTrack[]>([]);
@@ -46,7 +50,9 @@ export default function useRoom(localTracks: LocalTrack[], onError: Callback, op
             // All video tracks are published with 'low' priority. This works because the video
             // track that is displayed in the 'MainParticipant' component will have it's priority
             // set to 'high' via track.setPriority()
-            newRoom.localParticipant.publishTrack(track, { priority: track.kind === 'video' ? 'low' : 'standard' })
+            newRoom.localParticipant.publishTrack(track, {
+              priority: track.kind === 'video' ? 'low' : 'standard',
+            })
           );
 
           setIsConnecting(false);

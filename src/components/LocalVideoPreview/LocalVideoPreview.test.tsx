@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import LocalVideoPreview from './LocalVideoPreview';
-import { IVideoContext } from '../VideoProvider';
+import { IVideoContext } from '../../VideoProvider';
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 
 jest.mock('../../hooks/useVideoContext/useVideoContext');
@@ -13,7 +13,12 @@ describe('the LocalVideoPreview component', () => {
     mockedVideoContext.mockImplementation(() => {
       return {
         localTracks: [
-          { name: 'camera', attach: jest.fn(), detach: jest.fn(), mediaStreamTrack: { getSettings: () => ({}) } },
+          {
+            name: 'camera',
+            attach: jest.fn(),
+            detach: jest.fn(),
+            mediaStreamTrack: { getSettings: () => ({}) },
+          },
         ],
       } as any;
     });
@@ -24,7 +29,9 @@ describe('the LocalVideoPreview component', () => {
   it('should render null when there are no "camera" tracks', () => {
     mockedVideoContext.mockImplementation(() => {
       return {
-        localTracks: [{ name: 'microphone', attach: jest.fn(), detach: jest.fn() }],
+        localTracks: [
+          { name: 'microphone', attach: jest.fn(), detach: jest.fn() },
+        ],
       } as any;
     });
     const { container } = render(<LocalVideoPreview />);
