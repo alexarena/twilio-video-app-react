@@ -1,6 +1,6 @@
 import React from 'react';
 import useTrack from '../../hooks/useTrack/useTrack';
-import AudioTrack from '../AudioTrack/AudioTrack';
+import AudioTrack from '../AudioTrack';
 import VideoTrack from '../VideoTrack/VideoTrack';
 
 import { IVideoTrack } from '../../types';
@@ -20,7 +20,12 @@ interface PublicationProps {
   videoPriority?: Track.Priority | null;
 }
 
-export default function Publication({ publication, isLocal, disableAudio, videoPriority }: PublicationProps) {
+export default function Publication({
+  publication,
+  isLocal,
+  disableAudio,
+  videoPriority,
+}: PublicationProps) {
   const track = useTrack(publication);
 
   if (!track) return null;
