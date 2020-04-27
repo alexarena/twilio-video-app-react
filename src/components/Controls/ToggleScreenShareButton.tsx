@@ -5,7 +5,7 @@ import useScreenShareParticipant from '../../hooks/useScreenShareParticipant/use
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 
 export default function ToggleScreenShareButton(props: { disabled?: boolean }) {
-  const [isScreenShared, toggleScreenShare] = useScreenShareToggle();
+  const [, toggleScreenShare] = useScreenShareToggle();
   const screenShareParticipant = useScreenShareParticipant();
   const { room } = useVideoContext();
 
@@ -17,6 +17,9 @@ export default function ToggleScreenShareButton(props: { disabled?: boolean }) {
 
   const isDisabled =
     props.disabled || disableScreenShareButton || !isScreenShareSupported;
+
+  const isScreenShared =
+    screenShareParticipant && screenShareParticipant === room.localParticipant;
 
   return (
     <button onClick={toggleScreenShare} disabled={isDisabled}>

@@ -9,7 +9,13 @@ import { Participant, TrackPublication } from 'twilio-video';
 */
 export default function useScreenShareParticipant() {
   const { room } = useVideoContext();
-  const [screenShareParticipant, setScreenShareParticipant] = useState<Participant>();
+  const [screenShareParticipant, setScreenShareParticipant] = useState<
+    Participant
+  >();
+
+  useEffect(() => {
+    console.log('got ssp', screenShareParticipant);
+  }, [screenShareParticipant]);
 
   useEffect(() => {
     if (room.state === 'connected') {
@@ -19,7 +25,9 @@ export default function useScreenShareParticipant() {
             // the screenshare participant could be the localParticipant
             .concat(room.localParticipant)
             .find((participant: Participant) =>
-              Array.from<TrackPublication>(participant.tracks.values()).find(track => track.trackName === 'screen')
+              Array.from<TrackPublication>(participant.tracks.values()).find(
+                track => track.trackName === 'screen'
+              )
             )
         );
       };
@@ -32,14 +40,23 @@ export default function useScreenShareParticipant() {
       // the room object does not emit 'trackPublished' events for the localParticipant,
       // so we need to listen for them here.
       room.localParticipant.on('trackPublished', updateScreenShareParticipant);
-      room.localParticipant.on('trackUnpublished', updateScreenShareParticipant);
+      room.localParticipant.on(
+        'trackUnpublished',
+        updateScreenShareParticipant
+      );
       return () => {
         room.off('trackPublished', updateScreenShareParticipant);
         room.off('trackUnpublished', updateScreenShareParticipant);
         room.off('participantDisconnected', updateScreenShareParticipant);
 
-        room.localParticipant.off('trackPublished', updateScreenShareParticipant);
-        room.localParticipant.off('trackUnpublished', updateScreenShareParticipant);
+        room.localParticipant.off(
+          'trackPublished',
+          updateScreenShareParticipant
+        );
+        room.localParticipant.off(
+          'trackUnpublished',
+          updateScreenShareParticipant
+        );
       };
     }
   }, [room]);
