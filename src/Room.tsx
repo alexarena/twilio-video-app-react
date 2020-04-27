@@ -4,7 +4,7 @@ import { styled } from '@material-ui/core/styles';
 import Controls from './components/Controls/Controls';
 import LocalVideoPreview from './components/LocalVideoPreview/LocalVideoPreview';
 import ReconnectingNotification from './components/ReconnectingNotification/ReconnectingNotification';
-import AboutModal from './components/MenuBar/AboutDialog/AboutDialog';
+import AboutModal from './components/AboutDialog';
 
 import ParticipantStrip from './components/ParticipantStrip/ParticipantStrip';
 import MainParticipant from './components/MainParticipant/MainParticipant';

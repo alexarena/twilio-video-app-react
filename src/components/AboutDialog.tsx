@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { version as appVersion } from '../../../../package.json';
+import { version as appVersion } from '../../package.json';
 import Video from 'twilio-video';
 
 interface AboutDialogProps {
