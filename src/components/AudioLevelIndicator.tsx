@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { AudioTrack, LocalAudioTrack, RemoteAudioTrack } from 'twilio-video';
 import { interval } from 'd3-timer';
 import MicOff from '@material-ui/icons/MicOff';
-import useIsTrackEnabled from '../../hooks/useIsTrackEnabled/useIsTrackEnabled';
+import useIsTrackEnabled from '../hooks/useIsTrackEnabled/useIsTrackEnabled';
 
 let clipId = 0;
 const getUniqueClipId = () => clipId++;
@@ -35,7 +35,9 @@ function AudioLevelIndicator({
 }) {
   const SIZE = size || 24;
   const ref = useRef<SVGRectElement>(null);
-  const isTrackEnabled = useIsTrackEnabled(audioTrack as LocalAudioTrack | RemoteAudioTrack);
+  const isTrackEnabled = useIsTrackEnabled(
+    audioTrack as LocalAudioTrack | RemoteAudioTrack
+  );
 
   useEffect(() => {
     const SVGClipElement = ref.current;
@@ -63,7 +65,10 @@ function AudioLevelIndicator({
           values += sampleArray[i];
         }
 
-        const volume = Math.min(21, Math.max(0, Math.log10(values / length / 3) * 14));
+        const volume = Math.min(
+          21,
+          Math.max(0, Math.log10(values / length / 3) * 14)
+        );
 
         SVGClipElement?.setAttribute('y', String(21 - volume));
       }, 50);
@@ -80,7 +85,13 @@ function AudioLevelIndicator({
   const clipPathId = `audio-level-clip-${getUniqueClipId()}`;
 
   return isTrackEnabled ? (
-    <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" height={`${SIZE}px`} width={`${SIZE}px`}>
+    <svg
+      focusable="false"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      height={`${SIZE}px`}
+      width={`${SIZE}px`}
+    >
       <defs>
         <clipPath id={clipPathId}>
           <rect ref={ref} x="0" y="21" width="24" height="24" />

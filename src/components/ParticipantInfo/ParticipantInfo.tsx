@@ -9,7 +9,7 @@ import {
   RemoteVideoTrack,
 } from 'twilio-video';
 
-import AudioLevelIndicator from '../AudioLevelIndicator/AudioLevelIndicator';
+import AudioLevelIndicator from '../AudioLevelIndicator';
 import BandwidthWarning from '../BandwidthWarning/BandwidthWarning';
 import NetworkQualityLevel from '../NewtorkQualityLevel/NetworkQualityLevel';
 import ParticipantConnectionIndicator from './ParticipantConnectionIndicator/ParticipantConnectionIndicator';
