@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { styled } from '@material-ui/core/styles';
 
 import Controls from './components/Controls/Controls';
 import LocalVideoPreview from './components/LocalVideoPreview/LocalVideoPreview';
 import ReconnectingNotification from './components/ReconnectingNotification/ReconnectingNotification';
-import Menu from './components/MenuBar/Menu';
+import AboutModal from './components/MenuBar/AboutDialog/AboutDialog';
 
 import ParticipantStrip from './components/ParticipantStrip/ParticipantStrip';
 import MainParticipant from './components/MainParticipant/MainParticipant';
@@ -12,7 +12,6 @@ import MainParticipant from './components/MainParticipant/MainParticipant';
 import useVideoContext from './hooks/useVideoContext/useVideoContext';
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
-import usePrevious from './hooks/usePrevious';
 import useClassDetails from './ClassDetailsContext';
 
 const Container = styled('div')({
@@ -32,25 +31,50 @@ const Main = styled('main')({
   overflow: 'hidden',
 });
 
-function useConnectToRoom(token) {
-  const { connect } = useVideoContext();
-  const previousToken = usePrevious(token);
-  useEffect(() => {
-    if (token && previousToken !== token) {
-      console.log('connecting');
-      connect(token);
-    }
-  }, [previousToken, token, connect]);
+function AboutModalButton() {
+  const [aboutOpen, setAboutOpen] = useState(false);
+  return (
+    <>
+      <button onClick={() => setAboutOpen(true)}>About</button>
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
+    </>
+  );
 }
 
-export default function App() {
+function LogoutButton() {
+  const { room, localTracks } = useVideoContext();
+  const handleSignOut = useCallback(() => {
+    room.disconnect?.();
+    localTracks.forEach(track => track.stop());
+  }, [room.disconnect, localTracks]);
+
+  return <button onClick={handleSignOut}>Logout</button>;
+}
+
+function JoinButton() {
+  const { connect } = useVideoContext();
   const classDetails = useClassDetails();
-  const roomState = useRoomState();
-  useConnectToRoom(classDetails?.twilioToken);
 
   React.useEffect(() => {
     console.log('class details', classDetails);
   }, [classDetails]);
+
+  function join() {
+    if (classDetails?.twilioToken) {
+      connect(classDetails?.twilioToken);
+    }
+  }
+
+  return (
+    <button disabled={!classDetails} onClick={join}>
+      Join
+    </button>
+  );
+}
+
+export default function App() {
+  const roomState = useRoomState();
+  // useConnectToRoom(classDetails?.twilioToken);
 
   React.useEffect(() => {
     console.log('room state', roomState);
@@ -65,7 +89,15 @@ export default function App() {
 
   return (
     <Container style={{ height }}>
-      <Menu />
+      <div>
+        <AboutModalButton />
+        <LogoutButton />
+        <JoinButton />
+        <span>
+          <strong>Room state:</strong>
+          {roomState}
+        </span>
+      </div>
       <Main>
         {roomState === 'disconnected' ? (
           <LocalVideoPreview />
