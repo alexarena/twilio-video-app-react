@@ -23,7 +23,7 @@ const connectionOptions: ConnectOptions = {
   // Twilio Console: https://www.twilio.com/console/video/configure
   bandwidthProfile: {
     video: {
-      mode: 'collaboration',
+      mode: 'presentation',
       dominantSpeakerPriority: 'standard',
       renderDimensions: {
         high: { height: 1080, width: 1920 },

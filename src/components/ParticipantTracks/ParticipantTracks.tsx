@@ -29,19 +29,11 @@ export default function ParticipantTracks({
   const publications = usePublications(participant);
   const isLocal = participant === room.localParticipant;
 
-  let filteredPublications;
-
-  if (enableScreenShare && publications.some(p => p.trackName === 'screen')) {
-    filteredPublications = publications.filter(p => p.trackName !== 'camera');
-  } else {
-    filteredPublications = publications.filter(p => p.trackName !== 'screen');
-  }
-
   return (
     <>
-      {filteredPublications.map(publication => (
+      {publications.map(publication => (
         <Publication
-          key={publication.kind}
+          key={publication.trackName}
           publication={publication}
           participant={participant}
           isLocal={isLocal}

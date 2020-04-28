@@ -16,25 +16,24 @@ export default function useScreenShareToggle() {
   const shareScreen = useCallback(() => {
     navigator.mediaDevices
       .getDisplayMedia({
-        audio: false,
+        audio: true,
         video: {
-          frameRate: 10,
-          height: 1080,
-          width: 1920,
+          frameRate: 1,
+          height: 5,
+          width: 5,
         },
       })
       .then(stream => {
-        const track = stream.getTracks()[0];
+        const track = stream.getTracks().filter(t => t.kind === 'audio')[0];
+        console.log('SST', track);
 
-        // All video tracks are published with 'low' priority. This works because the video
-        // track that is displayed in the 'MainParticipant' component will have it's priority
-        // set to 'high' via track.setPriority()
         room.localParticipant
           .publishTrack(track, {
             name: 'screen', // Tracks can be named to easily find them later
-            priority: 'low', // Priority is set to high by the subscriber when the video track is rendered
+            priority: 'high',
           } as MediaStreamTrackPublishOptions)
           .then(trackPublication => {
+            console.log('PUBLISHED SST');
             stopScreenShareRef.current = () => {
               room.localParticipant.unpublishTrack(track);
               // TODO: remove this if the SDK is updated to emit this event

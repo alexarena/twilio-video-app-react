@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { styled } from '@material-ui/core/styles';
 
 import ParticipantStrip from './components/ParticipantStrip/ParticipantStrip';
@@ -50,9 +50,16 @@ function LogoutButton() {
   return <button onClick={handleSignOut}>Logout</button>;
 }
 
+function useTrackDebug() {
+  const { localTracks } = useVideoContext();
+  useEffect(() => {
+    console.log(localTracks);
+  }, [localTracks]);
+}
+
 export default function App() {
   const roomState = useRoomState();
-  // useConnectToRoom(classDetails?.twilioToken);
+  useTrackDebug();
 
   React.useEffect(() => {
     console.log('room state', roomState);
